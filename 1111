@@ -1,0 +1,74 @@
+'''
+9.输入一个变形数组，及某个数字，输出这个数字在变形数组中的位置
+def find_num(array, num)  要求算法复杂度为 log(n)
+变形的方法是将一个排好序的数组某个位置之前的数放到数组末尾，比如
+原始数组为：
+2  3  6  9  10  12  24  34
+得到以下变形数组（将2 3 6放在了数组末尾）：
+9  10  12  24  34  2  3  6
+比如，输入24和变形数组，输出 3
+   说明：
+1.不需要写变形的code，输入已经是一个变形的数组了
+2.不知道具体将多少个数放在了数组的末尾
+
+'''
+
+
+#9  10  12  24  34  2  3  6
+#9  10  12  24  34  100  3  6 7 7.5 7.6 7.7 7.8 7.9
+#9  10  12  24  34  100  3  6 7 7.5 7.6 7.7
+def findA(array):  # 找到轴的index
+    if len(array)==2:
+        return 1
+    left = 0
+    right = len(array) - 1
+    mid = (left + right) // 2  # mid始终找中间偏左的na一个.
+    if array[left] > array[mid]:
+        return findA(array[:mid+1])
+    return mid  + findA(array[mid:])
+def search(list, key):
+    left = 0     # 左边界
+    right = len(list) - 1   # 右边界
+    while left <= right:
+        mid = (left + right) // 2  # 取得中间索引
+        if key > list[mid]:
+            left = mid + 1
+        elif key < list[mid]:
+            right = mid - 1
+        else:
+            return mid
+    else:
+        return -1
+
+print(findA([10,11,12,32423423,1,2,3,4,5]))
+def find_num(array, num):
+    tmp=findA(array)
+    if num >array[-1]:
+        return search(array[:tmp],num)
+    else:
+        return tmp+search(array[tmp:],num)
+
+
+
+
+
+
+
+
+
+tmp=find_num([9  ,10  ,12  ,24,  34 , 2  ,3 , 6],6)
+# tmp=find_num([24],24)
+print(tmp)
+
+
+
+
+
+
+
+
+
+
+
+
+
